@@ -17,9 +17,9 @@ export class TicketDetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public getParam$(paramName: string): Observable<string> {
+  public getParam$(paramName: string): Observable<string|number> {
     return this.activatedRoute$.pipe(
-        map(param => param.get(paramName))
+        map((param: ParamMap) => param.get(paramName))
     );
   }
 
