@@ -1,6 +1,6 @@
 {
   "name": "coding-assignment",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@angular/common": "10.1.4",
