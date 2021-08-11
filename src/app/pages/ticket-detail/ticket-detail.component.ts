@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-ticket-detail',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketDetailComponent implements OnInit {
 
-  constructor() { }
+  public readonly activatedRoute$: Observable<ParamMap> = this.activatedRoute.paramMap;
+
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+  }
+
+  public getParam$(paramName: string): Observable<string> {
+    return this.activatedRoute$.pipe(
+        map(param => param.get(paramName))
+    );
   }
 
 }

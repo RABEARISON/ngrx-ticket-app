@@ -2,6 +2,6 @@
 
 <ul>
     <li *ngFor="let ticket of tickets$ | async">
-        Ticket: {{ ticket.id }}, {{ ticket.description }}
+        <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
     </li>
 </ul>
