@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
-import { Ticket } from '../interfaces/ticket.interface';
-import { User } from '../interfaces/user.interface';
+import { Ticket } from '../../interfaces/ticket.interface';
+import { User } from '../../interfaces/user.interface';
 
 /**
  * This service acts as a mock back-end.

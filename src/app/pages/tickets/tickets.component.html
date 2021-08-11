@@ -1,0 +1,7 @@
+<h2>Tickets</h2>
+
+<ul>
+    <li *ngFor="let ticket of tickets$ | async">
+        Ticket: {{ ticket.id }}, {{ ticket.description }}
+    </li>
+</ul>

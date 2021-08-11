@@ -6,7 +6,7 @@ describe('AppComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [AppComponent]
+            declarations: [AppComponent],
         });
 
         fixture = TestBed.createComponent(AppComponent);
