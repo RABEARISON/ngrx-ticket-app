@@ -1,8 +1,13 @@
 <span class="mat-display-1">New ticket</span>
-<form>
+<form [formGroup]="ticketForm">
     <mat-form-field [appearance]="'outline'">
         <mat-label>Description</mat-label>
-        <textarea name="description" [matTextareaAutosize]="true" matInput></textarea>
+        <textarea [readonly]="submitting" name="description" [matTextareaAutosize]="true" matInput formControlName="description"></textarea>
     </mat-form-field>
-    <button mat-flat-button type="button">ADD</button>
+    <button mat-flat-button color="primary" type="button"
+            [disabled]="!ticketForm.valid || submitting"
+            (click)="submit()"
+    >ADD</button>
+    <mat-progress-bar *ngIf="submitting" color="primary" mode="indeterminate"></mat-progress-bar>
+
 </form>

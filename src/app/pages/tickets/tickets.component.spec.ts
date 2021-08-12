@@ -5,6 +5,7 @@ import {BackendService} from "../../services/backend.service";
 import {StoreModule} from "@ngrx/store";
 import {MockStore, provideMockStore} from "@ngrx/store/testing";
 import {MatDialogModule} from "@angular/material/dialog";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 describe('TicketsComponent', () => {
   let component: TicketsComponent;
@@ -15,7 +16,7 @@ describe('TicketsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ TicketsComponent ],
       providers:[BackendService, provideMockStore({})],
-      imports: [StoreModule.forRoot({}), MatDialogModule],
+      imports: [StoreModule.forRoot({}), MatDialogModule, DragDropModule],
     })
     .compileComponents();
 

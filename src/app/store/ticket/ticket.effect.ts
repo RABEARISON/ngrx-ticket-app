@@ -42,10 +42,14 @@ export class TicketsEffects {
 
   UpdateTickets$ = createEffect( () => this.action$.pipe(
     ofType(TicketActions.TicketUpdateRequested),
-    switchMap(({ticket}) => {
-      return this.backendService.complete(ticket.id, ticket.completed).pipe(
+    switchMap(({ticket: {id, completed, assigneeId}, key}) => {
+        let service = this.backendService.complete(id, completed);
+        if (key === 'update-assignment') {
+            service = this.backendService.assign(id, assigneeId);
+        }
+      return service.pipe(
         map(res => {
-          return TicketActions.TicketUpdateSuccess( {ticket});
+          return TicketActions.TicketUpdateSuccess( {ticket: res});
         }),
         catchError((errorMessage) => {
           return of(TicketActions.TicketUpdateFailure({

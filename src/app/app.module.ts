@@ -21,10 +21,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDividerModule} from "@angular/material/divider";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
     declarations: [AppComponent, TicketsComponent, TicketDetailComponent, TicketAddComponent],
@@ -53,6 +56,10 @@ import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
         MatIconModule,
         MatToolbarModule,
         NgxSkeletonLoaderModule,
+        MatBadgeModule,
+        ReactiveFormsModule,
+        MatProgressBarModule,
+        DragDropModule,
     ],
     providers: [BackendService, AppResolver],
     bootstrap: [AppComponent],

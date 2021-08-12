@@ -11,6 +11,7 @@ import {TicketRequestedSuccess} from "../../store/ticket/ticket.action";
 import {Ticket} from "../../../interfaces/ticket.interface";
 import {User} from "../../../interfaces/user.interface";
 import {UserRequestedSuccess} from "../../store/user/user.action";
+import {AppResolver} from "../../app.resolver";
 
 describe('TicketDetailComponent', () => {
   let component: TicketDetailComponent;
@@ -35,7 +36,8 @@ describe('TicketDetailComponent', () => {
           }
         },
         provideMockStore({ initialState }),
-      ]
+          AppResolver
+      ],
     })
     .compileComponents();
 

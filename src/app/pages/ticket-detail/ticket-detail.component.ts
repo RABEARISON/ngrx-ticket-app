@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {combineLatest, Observable} from "rxjs";
-import {map, take} from "rxjs/operators";
+import {combineLatest, Observable, Subject} from "rxjs";
+import {map, take, takeUntil} from "rxjs/operators";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../store/app.state";
 import {selectUserLoading} from "../../store/user/user.selector";
@@ -18,14 +18,24 @@ export class TicketDetailComponent implements OnInit {
   public readonly activatedRoute$: Observable<ParamMap> = this.activatedRoute.paramMap;
   public loading$: Observable<boolean>;
   public ticket$: Observable<Ticket>;
+  private _unsubscribeAll: Subject<any>;
 
-  constructor(private activatedRoute: ActivatedRoute, protected store: Store<any>) { }
+  constructor(private activatedRoute: ActivatedRoute, protected store: Store<any>) {
+    this._unsubscribeAll = new Subject();
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   ngOnInit(): void {
     this.getParam$('id')
         .pipe(take(1))
         .subscribe(id => {
           this.ticket$ = this.store.pipe(
+              takeUntil(this._unsubscribeAll),
               select(selectTicket(id))
           );
         });
@@ -33,6 +43,7 @@ export class TicketDetailComponent implements OnInit {
       this.store.select(selectUserLoading),
       this.store.select(selectTicketLoading)
     ]).pipe(
+        takeUntil(this._unsubscribeAll),
         map(([userLoading, ticketLoading]) => userLoading && ticketLoading)
     );
   }

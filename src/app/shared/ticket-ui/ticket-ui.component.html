@@ -1,15 +1,15 @@
 <div class="ticket">
     <div class="title">
-        <h2>Ticket #{{ ticket.id }}</h2>
+        <h2>Ticket #{{ ticket?.id }}</h2>
         <span class="mr-auto"></span>
-        <ngx-avatar name="Victor" [size]="30"></ngx-avatar>
+        <ngx-avatar [name]="assigned?.name" [size]="35" *ngIf="ticket?.assigneeId"></ngx-avatar>
     </div>
    <div class="description">
-       <span>{{ ticket.description }}</span>
+       <span>{{ ticket?.description }}</span>
    </div>
     <div class="footer">
         <span class="mr-auto"></span>
-        <button mat-button routerLink="/{{ticket.id}}">
+        <button mat-button routerLink="/{{ticket?.id}}">
             Detail
             <mat-icon>visibility</mat-icon>
         </button>
@@ -18,8 +18,8 @@
             <mat-icon>assignment_ind</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <mat-selection-list #user>
-                <mat-list-option *ngFor="let user of users">
+            <mat-selection-list (selectionChange)="updateAssignment($event)">
+                <mat-list-option *ngFor="let user of _users" [selected]="user?.id === assigned?.id" [value]="user">
                     <ngx-avatar matListAvatar [size]="35" [name]="user?.name"></ngx-avatar>
                     <span matLine>{{user?.name}}</span>
                 </mat-list-option>

@@ -34,7 +34,7 @@ export const TicketCreateFailure = createAction(
 
 export const TicketUpdateRequested = createAction(
   `[${source}] update requested`,
-  props<{ ticket: Ticket }>()
+  props<{ ticket: Ticket, key: string }>()
 );
 
 export const TicketUpdateSuccess = createAction(

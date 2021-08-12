@@ -8,6 +8,7 @@ import {TicketRequestedSuccess} from "../../store/ticket/ticket.action";
 import {UserRequestedSuccess} from "../../store/user/user.action";
 import {Ticket} from "../../../interfaces/ticket.interface";
 import {User} from "../../../interfaces/user.interface";
+import {MatMenuModule} from "@angular/material/menu";
 
 describe('TicketUiComponent', () => {
   let component: TicketUiComponent;
@@ -20,7 +21,8 @@ describe('TicketUiComponent', () => {
       declarations: [ TicketUiComponent ],
       imports: [
         RouterTestingModule.withRoutes([]),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        MatMenuModule
       ],
       providers: [
         provideMockStore({initialState})

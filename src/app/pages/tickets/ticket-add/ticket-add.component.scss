@@ -2,4 +2,10 @@ form {
   display: flex;
   flex-direction: column;
   margin-top:2em;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+  }
 }
