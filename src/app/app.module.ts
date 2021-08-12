@@ -13,6 +13,8 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {MatButtonModule} from "@angular/material/button";
 import {TicketStore} from "./store/ticket/ticket.store";
 import {UserStore} from "./store/user/user.store";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AppResolver} from "./app.resolver";
 
 @NgModule({
     declarations: [AppComponent, TicketsComponent, TicketDetailComponent],
@@ -25,15 +27,16 @@ import {UserStore} from "./store/user/user.store";
         UserStore,
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
+
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: true // for development
         }),
-        StoreModule.forRoot({}, {}),
         MatButtonModule,
+        MatProgressSpinnerModule,
     ],
-    providers: [BackendService],
-    bootstrap: [AppComponent]
+    providers: [BackendService, AppResolver],
+    bootstrap: [AppComponent],
 })
 export class AppModule {
 

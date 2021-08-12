@@ -56,7 +56,6 @@ export const reducer = createReducer(
 export const {
   selectAll,
   selectIds,
-  selectTotal,
-  selectEntities,
+  selectTotal
 } = TicketAdapter.getSelectors();
 

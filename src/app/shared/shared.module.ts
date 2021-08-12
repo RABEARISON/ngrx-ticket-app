@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TicketUiComponent} from "./ticket-ui/ticket-ui.component";
 import {MatButtonModule} from "@angular/material/button";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -12,7 +13,8 @@ import {MatButtonModule} from "@angular/material/button";
   ],
     imports: [
         CommonModule,
-        MatButtonModule
+        MatButtonModule,
+        RouterModule
     ]
 })
 export class SharedModule { }

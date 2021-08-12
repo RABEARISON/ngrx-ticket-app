@@ -1,4 +1,12 @@
-<a href="/">
+<a routerLink="/">
     <button mat-button>See ticket list</button>
 </a>
-<h2>Tickets: <span>{{getParam$('id') | async}}</span></h2>
+
+<div class="head-title">
+    <h2>Tickets: <span>{{getParam$('id') | async}}</span></h2>
+    <mat-spinner diameter="30" *ngIf="loading$ | async"></mat-spinner>
+</div>
+
+<div *ngIf="{ticket: (ticket$|async)} as _">
+    <p>{{_.ticket?.description}}</p>
+</div>

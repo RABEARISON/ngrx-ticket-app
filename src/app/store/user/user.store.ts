@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import * as fromUser from './user.reducer';
 import {EffectsModule} from '@ngrx/effects';
-import {UsersEffects} from './user.effect';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
+import {UsersEffects} from "./user.effect";
 
 @NgModule({
   declarations: [],

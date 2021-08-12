@@ -2,4 +2,10 @@ ul {
   list-style-type: none;
   display: inline-flex;
   column-gap: 1em;
+  flex-wrap: wrap;
+}
+
+.head-title {
+  display: flex;
+  column-gap: 1em;
 }
