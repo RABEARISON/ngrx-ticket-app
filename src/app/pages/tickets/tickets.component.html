@@ -3,8 +3,22 @@
     <mat-spinner diameter="30" *ngIf="loading$ | async"></mat-spinner>
 </div>
 
-<ul>
-    <li *ngFor="let ticket of tickets$ | async">
-        <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
-    </li>
-</ul>
+<div class="content">
+    <div class="ticket-list">
+        <span class="mat-display-1">Todo</span>
+        <ul>
+            <li *ngFor="let ticket of todoTickets$ | async">
+                <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
+            </li>
+        </ul>
+    </div>
+
+    <div class="ticket-completed">
+        <span class="mat-display-1">Completed</span>
+        <ul>
+            <li *ngFor="let ticket of completedTickets$ | async">
+                <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
+            </li>
+        </ul>
+    </div>
+</div>

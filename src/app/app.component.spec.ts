@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from "@angular/router/testing";
+import {StoreModule} from "@ngrx/store";
 
 describe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
@@ -8,7 +9,10 @@ describe('AppComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [AppComponent],
-            imports: [RouterTestingModule.withRoutes([])]
+            imports: [
+                RouterTestingModule.withRoutes([]),
+                StoreModule.forRoot({})
+            ]
         });
 
         fixture = TestBed.createComponent(AppComponent);

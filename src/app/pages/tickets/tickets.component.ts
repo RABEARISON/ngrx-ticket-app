@@ -5,7 +5,12 @@ import {Ticket} from "../../../interfaces/ticket.interface";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../store/app.state";
 import {selectAllUser, selectUserLoading} from "../../store/user/user.selector";
-import {selectAllTicket, selectTicketLoading} from "../../store/ticket/ticket.selector";
+import {
+  selectAllTicket,
+  selectCompletedTickets,
+  selectTicketLoading,
+  selectTodoTickets
+} from "../../store/ticket/ticket.selector";
 import {map} from "rxjs/operators";
 import {TicketCreateRequested} from "../../store/ticket/ticket.action";
 
@@ -18,7 +23,8 @@ export class TicketsComponent implements OnInit {
   // public readonly users$: Observable<User[]> = this.backendService.users();
   // public readonly tickets$: Observable<Ticket[]> = this.backendService.tickets();
   public users$: Observable<User[]>;
-  public tickets$: Observable<Ticket[]>;
+  public todoTickets$: Observable<Ticket[]>;
+  public completedTickets$: Observable<Ticket[]>;
   public loading$: Observable<boolean>;
 
   constructor(protected store: Store<any>) { }
@@ -27,9 +33,8 @@ export class TicketsComponent implements OnInit {
     this.users$ = this.store.pipe(
         select(selectAllUser)
     );
-    this.tickets$ = this.store.pipe(
-        select(selectAllTicket)
-    );
+    this.todoTickets$ = this.store.pipe(select(selectTodoTickets));
+    this.completedTickets$ = this.store.pipe(select(selectCompletedTickets));
 
     this.loading$ = combineLatest([
       this.store.select(selectUserLoading),

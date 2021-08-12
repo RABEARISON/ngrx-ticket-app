@@ -11,12 +11,12 @@ export const selectTicketState = createSelector(
 
 export const selectTicketLoading = createSelector(
   selectTicketState,
-  ({loading}) => loading
+  (state) => state?.loading
 );
 
 export const selectTicketLoaded = createSelector(
     selectTicketState,
-    ({loaded}) => loaded
+    (state) => state?.loaded
 );
 
 export const selectAllTicket = createSelector(
@@ -24,7 +24,17 @@ export const selectAllTicket = createSelector(
   fromTicket.selectAll
 );
 
+export const selectTodoTickets = createSelector(
+    selectAllTicket,
+    tickets => tickets.filter(ticket => !ticket.completed)
+);
+
+export const selectCompletedTickets = createSelector(
+    selectAllTicket,
+    tickets => tickets.filter(ticket => ticket.completed)
+);
+
 export const selectTicket = (id: number | string) => createSelector(
     selectTicketState,
-    state => state.entities[id]
+    state => state?.entities[id]
 );

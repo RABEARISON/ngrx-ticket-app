@@ -5,18 +5,23 @@ import {ActivatedRoute, convertToParamMap} from "@angular/router";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {of} from "rxjs";
+import {StoreModule} from "@ngrx/store";
+import {MockStore, provideMockStore} from "@ngrx/store/testing";
 
 describe('TicketDetailComponent', () => {
   let component: TicketDetailComponent;
   let fixture: ComponentFixture<TicketDetailComponent>;
   let ticketId = 1;
+  let store: MockStore;
+  const initialState = { loading: false };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TicketDetailComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
+        StoreModule.forRoot({})
       ],
       providers:[
         {
@@ -24,10 +29,13 @@ describe('TicketDetailComponent', () => {
           useValue: {
             paramMap: of(convertToParamMap({id: ticketId})),
           }
-        }
+        },
+        provideMockStore({ initialState }),
       ]
     })
     .compileComponents();
+
+    store = TestBed.inject(MockStore);
   });
 
   beforeEach(() => {

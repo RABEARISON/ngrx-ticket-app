@@ -11,12 +11,12 @@ export const selectUserState = createSelector(
 
 export const selectUserLoading = createSelector(
   selectUserState,
-  ({loading}) => loading
+  (state) => state?.loading
 );
 
 export const selectUserLoaded = createSelector(
     selectUserState,
-    ({loaded}) => loaded
+    (state) => state?.loaded
 );
 
 export const selectAllUser = createSelector(
