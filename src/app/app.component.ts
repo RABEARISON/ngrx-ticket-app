@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {AppState} from "./store/app.state";
-import {TicketLoadRequested} from "./store/ticket/ticket.action";
-import {UserLoadRequested} from "./store/user/user.action";
+import {version} from "../../package.json";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,7 @@ import {UserLoadRequested} from "./store/user/user.action";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+  public version = version;
   public title;
 
   constructor(protected store: Store<AppState>) {

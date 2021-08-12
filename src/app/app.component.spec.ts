@@ -2,9 +2,26 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {StoreModule} from "@ngrx/store";
+import {MockStore, provideMockStore} from "@ngrx/store/testing";
+import {TicketLoadRequested, TicketRequestedSuccess} from "./store/ticket/ticket.action";
 
 describe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
+    let store: MockStore;
+    let appState = {
+        tickets: {
+            loading: false,
+            entities: {
+                1: {
+                    id: 1,
+                    assigneeId: 111,
+                    completed: false,
+                    description: 'Test'
+                }
+            },
+            ids: [1]
+        }
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -12,10 +29,12 @@ describe('AppComponent', () => {
             imports: [
                 RouterTestingModule.withRoutes([]),
                 StoreModule.forRoot({})
-            ]
+            ],
+            providers: [provideMockStore({})]
         });
 
         fixture = TestBed.createComponent(AppComponent);
+        store = TestBed.inject(MockStore);
     });
 
     it('should create the app', () => {

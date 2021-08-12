@@ -1,3 +1,11 @@
 .container {
   padding: 2em;
+  .title {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    span {
+      align-self: flex-end;
+    }
+  }
 }

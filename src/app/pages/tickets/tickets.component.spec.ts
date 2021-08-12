@@ -1,20 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TicketsComponent } from './tickets.component';
+import {TicketsComponent} from './tickets.component';
 import {BackendService} from "../../services/backend.service";
 import {StoreModule} from "@ngrx/store";
+import {MockStore, provideMockStore} from "@ngrx/store/testing";
+import {MatDialogModule} from "@angular/material/dialog";
 
 describe('TicketsComponent', () => {
   let component: TicketsComponent;
   let fixture: ComponentFixture<TicketsComponent>;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TicketsComponent ],
-      providers:[BackendService],
-      imports: [StoreModule.forRoot({})]
+      providers:[BackendService, provideMockStore({})],
+      imports: [StoreModule.forRoot({}), MatDialogModule],
     })
     .compileComponents();
+
+    store = TestBed.inject(MockStore);
   });
 
   beforeEach(() => {

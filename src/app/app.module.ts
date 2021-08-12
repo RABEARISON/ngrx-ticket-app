@@ -15,9 +15,19 @@ import {TicketStore} from "./store/ticket/ticket.store";
 import {UserStore} from "./store/user/user.store";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AppResolver} from "./app.resolver";
+import { TicketAddComponent } from './pages/tickets/ticket-add/ticket-add.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatDividerModule} from "@angular/material/divider";
+import {FormsModule} from "@angular/forms";
+import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 @NgModule({
-    declarations: [AppComponent, TicketsComponent, TicketDetailComponent],
+    declarations: [AppComponent, TicketsComponent, TicketDetailComponent, TicketAddComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -34,6 +44,15 @@ import {AppResolver} from "./app.resolver";
         }),
         MatButtonModule,
         MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatDividerModule,
+        FormsModule,
+        MatIconModule,
+        MatToolbarModule,
+        NgxSkeletonLoaderModule,
     ],
     providers: [BackendService, AppResolver],
     bootstrap: [AppComponent],

@@ -1,22 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TicketUiComponent } from './ticket-ui.component';
-import {RouterModule} from "@angular/router";
-import {TicketDetailComponent} from "../../pages/ticket-detail/ticket-detail.component";
+import {TicketUiComponent} from './ticket-ui.component';
 import {RouterTestingModule} from "@angular/router/testing";
+import {StoreModule} from "@ngrx/store";
+import {MockStore, provideMockStore} from "@ngrx/store/testing";
+import {TicketRequestedSuccess} from "../../store/ticket/ticket.action";
+import {UserRequestedSuccess} from "../../store/user/user.action";
+import {Ticket} from "../../../interfaces/ticket.interface";
+import {User} from "../../../interfaces/user.interface";
 
 describe('TicketUiComponent', () => {
   let component: TicketUiComponent;
   let fixture: ComponentFixture<TicketUiComponent>;
+  let store: MockStore;
+  const initialState = { loading: false };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TicketUiComponent ],
       imports: [
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
+        StoreModule.forRoot({})
+      ],
+      providers: [
+        provideMockStore({initialState})
       ]
     })
     .compileComponents();
+    store = TestBed.inject(MockStore);
   });
 
   beforeEach(() => {

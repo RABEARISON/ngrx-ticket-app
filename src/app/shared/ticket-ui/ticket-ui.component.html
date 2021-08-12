@@ -1,13 +1,29 @@
 <div class="ticket">
     <div class="title">
         <h2>Ticket #{{ ticket.id }}</h2>
+        <span class="mr-auto"></span>
+        <ngx-avatar name="Victor" [size]="30"></ngx-avatar>
     </div>
    <div class="description">
        <span>{{ ticket.description }}</span>
    </div>
     <div class="footer">
-        <a routerLink="/{{ticket.id}}">
-            <button mat-button>Detail</button>
-        </a>
+        <span class="mr-auto"></span>
+        <button mat-button routerLink="/{{ticket.id}}">
+            Detail
+            <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-button [matMenuTriggerFor]="menu">
+            Assign
+            <mat-icon>assignment_ind</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <mat-selection-list #user>
+                <mat-list-option *ngFor="let user of users">
+                    <ngx-avatar matListAvatar [size]="35" [name]="user?.name"></ngx-avatar>
+                    <span matLine>{{user?.name}}</span>
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-menu>
     </div>
 </div>

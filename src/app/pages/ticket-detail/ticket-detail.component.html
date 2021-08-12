@@ -1,6 +1,13 @@
-<a routerLink="/">
-    <button mat-button>See ticket list</button>
-</a>
+<mat-toolbar>
+    <a routerLink="/">
+        <button mat-flat-button>
+            <mat-icon>home</mat-icon>
+            Ticket list
+        </button>
+    </a>
+    <span class="mr-auto"></span>
+
+</mat-toolbar>
 
 <div class="head-title">
     <h2>Ticket #<span>{{getParam$('id') | async}}</span></h2>

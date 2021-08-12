@@ -3,16 +3,11 @@ import {combineLatest, Observable} from "rxjs";
 import {User} from "../../../interfaces/user.interface";
 import {Ticket} from "../../../interfaces/ticket.interface";
 import {select, Store} from "@ngrx/store";
-import {AppState} from "../../store/app.state";
 import {selectAllUser, selectUserLoading} from "../../store/user/user.selector";
-import {
-  selectAllTicket,
-  selectCompletedTickets,
-  selectTicketLoading,
-  selectTodoTickets
-} from "../../store/ticket/ticket.selector";
+import {selectCompletedTickets, selectTicketLoading, selectTodoTickets} from "../../store/ticket/ticket.selector";
 import {map} from "rxjs/operators";
-import {TicketCreateRequested} from "../../store/ticket/ticket.action";
+import {MatDialog} from "@angular/material/dialog";
+import {TicketAddComponent} from "./ticket-add/ticket-add.component";
 
 @Component({
   selector: 'app-tickets',
@@ -26,8 +21,9 @@ export class TicketsComponent implements OnInit {
   public todoTickets$: Observable<Ticket[]>;
   public completedTickets$: Observable<Ticket[]>;
   public loading$: Observable<boolean>;
+  public search: string;
 
-  constructor(protected store: Store<any>) { }
+  constructor(protected store: Store<any>, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.users$ = this.store.pipe(
@@ -46,6 +42,12 @@ export class TicketsComponent implements OnInit {
     // setInterval(() => {
     //   this.store.dispatch(TicketCreateRequested({description: 'Test test'}))
     // }, 5000)
+  }
+
+  openModalAddTicket() {
+    this.dialog.open(TicketAddComponent, {
+      minWidth: '450px'
+    } );
   }
 
 }

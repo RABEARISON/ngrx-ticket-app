@@ -4,21 +4,70 @@
 </div>
 
 <div class="content">
+    <div class="filter">
+        <mat-toolbar color="primary">
+            <button mat-icon-button>
+                <mat-icon>filter_alt</mat-icon>
+            </button>
+            <span>Filter</span>
+        </mat-toolbar>
+        <section>
+            <mat-form-field [appearance]="'outline'">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-label>Search</mat-label>
+                <input type="search" matInput [(ngModel)]="search">
+            </mat-form-field>
+            <h4>Assignment</h4>
+            <mat-radio-group aria-label="Select assigned filter" value="">
+                <mat-radio-button value="">All</mat-radio-button>
+                <mat-radio-button value="assigned">Assigned</mat-radio-button>
+                <mat-radio-button value="unassigned">Unassigned</mat-radio-button>
+            </mat-radio-group>
+        </section>
+    </div>
     <div class="ticket-list">
-        <span class="mat-display-1">Todo</span>
-        <ul>
-            <li *ngFor="let ticket of todoTickets$ | async">
-                <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
-            </li>
-        </ul>
+        <mat-toolbar color="primary">
+            <button mat-icon-button>
+                <mat-icon>splitscreen</mat-icon>
+            </button>
+            <span>Todo</span>
+            <span class="mr-auto"></span>
+            <button mat-raised-button (click)="openModalAddTicket()">
+                New ticket
+                <mat-icon matSuffix>add</mat-icon>
+            </button>
+        </mat-toolbar>
+        <section>
+            <ng-container *ngIf="loading$|async">
+                <app-ticket-ui-loader></app-ticket-ui-loader>
+                <app-ticket-ui-loader></app-ticket-ui-loader>
+                <app-ticket-ui-loader></app-ticket-ui-loader>
+            </ng-container>
+            <ul>
+                <li *ngFor="let ticket of todoTickets$ | async">
+                    <app-ticket-ui [ticket]="ticket" [users]="users$|async"></app-ticket-ui>
+                </li>
+            </ul>
+        </section>
     </div>
 
     <div class="ticket-completed">
-        <span class="mat-display-1">Completed</span>
-        <ul>
-            <li *ngFor="let ticket of completedTickets$ | async">
-                <app-ticket-ui [ticket]="ticket"></app-ticket-ui>
-            </li>
-        </ul>
+        <mat-toolbar color="primary">
+            <button mat-icon-button>
+                <mat-icon>assignment_turned_in</mat-icon>
+            </button>
+            <span>Completed</span>
+        </mat-toolbar>
+        <section>
+            <ng-container *ngIf="loading$|async">
+                <app-ticket-ui-loader></app-ticket-ui-loader>
+                <app-ticket-ui-loader></app-ticket-ui-loader>
+            </ng-container>
+            <ul>
+                <li *ngFor="let ticket of completedTickets$ | async">
+                    <app-ticket-ui [ticket]="ticket" [users]="users$|async"></app-ticket-ui>
+                </li>
+            </ul>
+        </section>
     </div>
 </div>

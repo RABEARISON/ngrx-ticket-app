@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Ticket} from "../../../interfaces/ticket.interface";
+import {User} from "../../../interfaces/user.interface";
 
 @Component({
   selector: 'app-ticket-ui',
@@ -9,6 +10,7 @@ import {Ticket} from "../../../interfaces/ticket.interface";
 export class TicketUiComponent implements OnInit {
 
   @Input() ticket: Ticket;
+  @Input() users: User[];
 
   constructor() { }
 

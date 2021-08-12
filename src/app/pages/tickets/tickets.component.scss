@@ -16,10 +16,38 @@ ul {
   height: 84vh;
   overflow: scroll;
 
-  .ticket-list, .ticket-completed {
+  .filter {
+    flex: 45%;
+    height: 305px;
+
+    mat-form-field {
+      width: 100%;
+    }
+    mat-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+  }
+
+  .ticket-list, .ticket-completed , .filter{
     border: 1px solid #e8e8e8;
     border-radius: 4px;
     width: 100%;
-    padding: 1em;
+    overflow: scroll;
+    section {
+      padding: 1em;
+    }
+  }
+
+  .ticket-list {
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      .mat-display-1 {
+        margin: 0 !important;
+      }
+    }
   }
 }

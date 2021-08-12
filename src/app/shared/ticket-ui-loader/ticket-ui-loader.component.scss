@@ -1,0 +1,11 @@
+.header, .footer {
+  display: flex;
+  align-items: center;
+}
+.footer {
+  gap: 1em;
+}
+.container {
+  border: 1px solid #e8e8e8;
+  padding: 1em;
+}

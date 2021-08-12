@@ -7,6 +7,10 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {of} from "rxjs";
 import {StoreModule} from "@ngrx/store";
 import {MockStore, provideMockStore} from "@ngrx/store/testing";
+import {TicketRequestedSuccess} from "../../store/ticket/ticket.action";
+import {Ticket} from "../../../interfaces/ticket.interface";
+import {User} from "../../../interfaces/user.interface";
+import {UserRequestedSuccess} from "../../store/user/user.action";
 
 describe('TicketDetailComponent', () => {
   let component: TicketDetailComponent;
