@@ -1,5 +1,9 @@
 <div class="head-title">
     <h2>Tickets</h2>
+    <button mat-flat-button color="accent" [disabled]="_hasRollback?.length === 0" (click)="rollback()">
+        <mat-icon>undo</mat-icon>
+        Rollback
+    </button>
     <mat-spinner diameter="30" *ngIf="loading$ | async"></mat-spinner>
 </div>
 

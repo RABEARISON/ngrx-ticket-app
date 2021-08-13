@@ -34,21 +34,42 @@ export const reducer = createReducer(
   on(
     TicketActions.TicketUpdateSuccess,
     (state, {ticket}) => {
+        const entity = state.entities[ticket.id];
+        let updateRollback = [...state.updateRollback, entity];
+        updateRollback = updateRollback.slice(-5);
+
       return TicketAdapter.updateOne({id: ticket.id, changes: ticket}, {
-        ...state,
-        loading: false
+          ...state,
+          updateRollback,
+          loading: false
       });
     }),
+  on(
+      TicketActions.TicketUpdateRollback,
+      (state) => {
+          const lastState = state.updateRollback[state.updateRollback.length - 1];
+          const cloneRollbackHistories = [...state.updateRollback];
+
+          if (cloneRollbackHistories.length > -1) {
+              cloneRollbackHistories.pop();
+          }
+          return TicketAdapter.updateOne({id: lastState.id, changes: lastState}, {
+              ...state,
+              updateRollback: cloneRollbackHistories,
+              loading: false
+          } )
+      }
+  ),
   on(
     TicketActions.TicketRequestedFailure,
     TicketActions.TicketCreateFailure,
     TicketActions.TicketUpdateFailure,
     (state, {errorMessage}) => {
       return {
-        ...state,
-        errorMessage,
-        loading: false,
-        loaded: false
+          ...state,
+          errorMessage,
+          loading: false,
+          loaded: false
       };
   })
 );

@@ -4,11 +4,16 @@ import {User} from "../../../interfaces/user.interface";
 import {Ticket} from "../../../interfaces/ticket.interface";
 import {select, Store} from "@ngrx/store";
 import {selectAllUser, selectUserLoading} from "../../store/user/user.selector";
-import {selectCompletedTickets, selectTicketLoading, selectTodoTickets} from "../../store/ticket/ticket.selector";
+import {
+  selectCompletedTickets,
+  selectTicketLoading,
+  selectTicketRollback,
+  selectTodoTickets
+} from "../../store/ticket/ticket.selector";
 import {debounceTime, distinctUntilChanged, map, takeUntil} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {TicketAddComponent} from "./ticket-add/ticket-add.component";
-import {TicketUpdateRequested} from "../../store/ticket/ticket.action";
+import {TicketUpdateRequested, TicketUpdateRollback} from "../../store/ticket/ticket.action";
 
 @Component({
   selector: 'app-tickets',
@@ -19,6 +24,9 @@ export class TicketsComponent implements OnInit, OnDestroy {
   public users$: Observable<User[]>;
   public loading$: Observable<boolean>;
   public search$: Observable<string>;
+
+  public hasRollback$: Observable<Ticket[]>;
+  public _hasRollback: Ticket[] = [];
 
   public search: string;
   public keyup = new Subject();
@@ -36,6 +44,14 @@ export class TicketsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.hasRollback$ = this.store.pipe(
+        takeUntil(this._unsubscribeAll),
+        select(selectTicketRollback)
+    );
+
+    this.hasRollback$.pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(rollback => this._hasRollback = rollback);
 
     this.search$ = this.keyup.pipe(
         takeUntil(this._unsubscribeAll),
@@ -86,6 +102,10 @@ export class TicketsComponent implements OnInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  rollback(): void {
+    this.store.dispatch(TicketUpdateRollback())
   }
 
   openModalAddTicket() {

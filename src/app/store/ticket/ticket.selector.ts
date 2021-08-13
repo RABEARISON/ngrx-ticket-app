@@ -19,6 +19,11 @@ export const selectTicketLoaded = createSelector(
     (state) => state?.loaded
 );
 
+export const selectTicketRollback = createSelector(
+    selectTicketState,
+    (state) => state?.updateRollback
+);
+
 export const selectAllTicket = createSelector(
   selectTicketState,
   fromTicket.selectAll

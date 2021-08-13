@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as TicketActions from './ticket.action';
 import {of} from 'rxjs';
 import { Store } from '@ngrx/store';
 import {BackendService} from "../../services/backend.service";
+import {AppState} from "../app.state";
 
 @Injectable()
 export class TicketsEffects {
@@ -42,27 +43,27 @@ export class TicketsEffects {
 
   UpdateTickets$ = createEffect( () => this.action$.pipe(
     ofType(TicketActions.TicketUpdateRequested),
-    switchMap(({ticket: {id, completed, assigneeId}, key}) => {
-        let service = this.backendService.complete(id, completed);
+    tap(({ticket, key}) => {
+        let service = this.backendService.complete(ticket.id, ticket.completed);
         if (key === 'update-assignment') {
-            service = this.backendService.assign(id, assigneeId);
+            service = this.backendService.assign(ticket.id, ticket.assigneeId);
         }
-      return service.pipe(
-        map(res => {
-          return TicketActions.TicketUpdateSuccess( {ticket: res});
-        }),
-        catchError((errorMessage) => {
-          return of(TicketActions.TicketUpdateFailure({
-            errorMessage
-          }));
-        })
-      );
+        this.store.dispatch(TicketActions.TicketUpdateSuccess( {ticket}));
+        return service.pipe(
+            catchError((errorMessage) => {
+                this.store.dispatch(TicketActions.TicketUpdateRollback());
+                return of(TicketActions.TicketUpdateFailure({
+                    errorMessage
+                }));
+            })
+        );
     })
-  ));
+  ), {dispatch: false});
 
 
   constructor(
     private action$: Actions,
-    private backendService: BackendService
+    private backendService: BackendService,
+    protected store: Store<AppState>
   ) {}
 }

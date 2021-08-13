@@ -37,6 +37,10 @@ export const TicketUpdateRequested = createAction(
   props<{ ticket: Ticket, key: string }>()
 );
 
+export const TicketUpdateRollback = createAction(
+    `[${source}] update rollback requested`
+);
+
 export const TicketUpdateSuccess = createAction(
   `[${source}] updated`,
   props<{ ticket: Ticket }>()
