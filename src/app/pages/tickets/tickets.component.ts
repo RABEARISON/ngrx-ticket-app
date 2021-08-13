@@ -47,17 +47,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.search$.pipe(
         takeUntil(this._unsubscribeAll)
     ).subscribe(value => {
-        this.tickets = this.filterRows({
-          value,
-          rows: this._tickets,
-          filterOn: 'description'
-        });
-        this.completedTickets = this.filterRows({
-          value,
-          rows: this._completedTickets,
-          filterOn: 'description'
-        });
-        this.assignmentFilterChanged({value: this.assignedFilter});
+        this.filterChanged({value: this.assignedFilter});
     })
 
     this.store.pipe(
@@ -104,14 +94,6 @@ export class TicketsComponent implements OnInit, OnDestroy {
     } );
   }
 
-  filterRows({value, rows, filterOn}): any[] {
-    const key = value?.toLowerCase();
-    return rows.filter(ticket => {
-      const text = ticket[filterOn]?.toLowerCase();
-      return (value && filterOn) ? text.indexOf(key) > -1 : true;
-    });
-  }
-
   drop(event, {completed}): void {
     const ticket = event?.item?.data;
       this.store.dispatch(TicketUpdateRequested({
@@ -123,19 +105,38 @@ export class TicketsComponent implements OnInit, OnDestroy {
       }))
   }
 
-  assignmentFilterChanged(event): void {
-      this.assignedFilter = event?.value;
-      this.tickets = this._tickets.filter(ticket => {
-        return !this.assignedFilter ||
-            (this.assignedFilter === 'assigned' && ticket.assigneeId !== null) ||
-            (this.assignedFilter === 'unassigned' && ticket.assigneeId === null);
+  filterRows({value, rows, filterOn}): any[] {
+    const key = value?.toLowerCase();
+    return rows.filter(ticket => {
+      const text = ticket[filterOn]?.toLowerCase();
+      return (value && filterOn) ? text.indexOf(key) > -1 : true;
+    });
+  }
 
-      });
+  filterChanged(event): void {
+      this.assignedFilter = event?.value;
+      this.tickets = this.filterAssignment(this._tickets);
       this.tickets = this.filterRows({
         value: this.search,
         rows: this.tickets,
         filterOn: 'description'
       });
+
+      this.completedTickets = this.filterAssignment(this._completedTickets);
+      this.completedTickets = this.filterRows({
+        value: this.search,
+        rows: this.completedTickets,
+        filterOn: 'description'
+      });
+  }
+
+  filterAssignment(rows: Ticket[]): Ticket[] {
+    return rows.filter(ticket => {
+      return !this.assignedFilter ||
+          (this.assignedFilter === 'assigned' && ticket.assigneeId !== null) ||
+          (this.assignedFilter === 'unassigned' && ticket.assigneeId === null);
+
+    });
   }
 
 }

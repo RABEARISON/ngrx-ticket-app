@@ -18,7 +18,7 @@
                 <input type="search" matInput [(ngModel)]="search" (input)="keyup.next(search)">
             </mat-form-field>
             <h4>Assignment</h4>
-            <mat-radio-group aria-label="Select assigned filter" value="" (change)="assignmentFilterChanged($event)">
+            <mat-radio-group aria-label="Select assigned filter" value="" (change)="filterChanged($event)">
                 <mat-radio-button value="">All</mat-radio-button>
                 <mat-radio-button value="assigned">Assigned</mat-radio-button>
                 <mat-radio-button value="unassigned">Unassigned</mat-radio-button>
