@@ -77,10 +77,14 @@ export class BackendService {
             return of(foundTicket).pipe(
                 delay(randomDelay()),
                 map((ticket: Ticket) => {
-                    return {
+                    const newEntry = {
                         ...ticket,
                         assigneeId: +userId || null
                     };
+                    this.storedTickets = this.storedTickets.map(ticket => {
+                       return ticketId === ticket.id ? newEntry : ticket;
+                    })
+                    return newEntry;
                 })
             );
         }
@@ -95,10 +99,14 @@ export class BackendService {
             return of(foundTicket).pipe(
                 delay(randomDelay()),
                 map((ticket: Ticket) => {
-                    return {
+                    const newEntry = {
                         ...ticket,
                         completed
                     };
+                    this.storedTickets = this.storedTickets.map(ticket => {
+                        return ticketId === ticket.id ? newEntry : ticket;
+                    })
+                    return newEntry;
                 })
             );
         }
