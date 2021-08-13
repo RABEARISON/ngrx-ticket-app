@@ -44,11 +44,20 @@ export class TicketsEffects {
   UpdateTickets$ = createEffect( () => this.action$.pipe(
     ofType(TicketActions.TicketUpdateRequested),
     tap(({ticket, key}) => {
-        let service = this.backendService.complete(ticket.id, ticket.completed);
-        if (key === 'update-assignment') {
-            service = this.backendService.assign(ticket.id, ticket.assigneeId);
+        let service;
+
+        switch (key) {
+            case 'update-completed':
+                service = this.backendService.complete(ticket.id, ticket.completed);
+                break;
+            case 'update-assignment':
+            default:
+                service = this.backendService.assign(ticket.id, ticket.assigneeId);
+                break;
         }
+
         this.store.dispatch(TicketActions.TicketUpdateSuccess( {ticket}));
+
         return service.pipe(
             catchError((errorMessage) => {
                 this.store.dispatch(TicketActions.TicketUpdateRollback());
